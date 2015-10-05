@@ -127,7 +127,7 @@ namespace Pokemon_Rumble_World_Save_Tool
             ROOT_DIR = "";
             B_Save_CMP.Enabled =
                 B_Save_DEC.Enabled =
-                    NUP_Diamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = GB_MonEdit.Enabled = loaded = false;
+                    NUP_Diamonds.Enabled = NUP_BDiamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = GB_MonEdit.Enabled = loaded = false;
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() != DialogResult.OK) return;
 
@@ -188,6 +188,7 @@ namespace Pokemon_Rumble_World_Save_Tool
                 {
                     NUP_P.Value = BitConverter.ToUInt32(decdata, offset);
                     NUP_Diamonds.Value = BitConverter.ToUInt32(decdata, offset + 4);
+                    NUP_BDiamonds.Value = BitConverter.ToUInt32(decdata, offset + 76);
                     NUP_Rank.Value = BitConverter.ToUInt32(decdata, offset + 8);
                     textBox1.Text = ROOT_DIR;
                     LoadMons();
@@ -195,14 +196,14 @@ namespace Pokemon_Rumble_World_Save_Tool
                     Update_Data(null, null);
                     B_Save_CMP.Enabled =
                         B_Save_DEC.Enabled =
-                            NUP_Diamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = GB_MonEdit.Enabled = true;
+                            NUP_Diamonds.Enabled = NUP_BDiamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = GB_MonEdit.Enabled = true;
                     CB_MonSelection.SelectedIndex = 0;
                 }
                 else
                 {
                     MessageBox.Show("Unable to find offset of data. Try manually editing the save.");
                     B_Save_CMP.Enabled = B_Save_DEC.Enabled = GB_MonEdit.Enabled = true;
-                    NUP_Diamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = false;
+                    NUP_Diamonds.Enabled = NUP_BDiamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = false;
                     LoadMons();
                     CB_MonSelection.SelectedIndex = 0;
                 }
@@ -218,7 +219,7 @@ namespace Pokemon_Rumble_World_Save_Tool
             ROOT_DIR = "";
             B_Save_CMP.Enabled =
                 B_Save_DEC.Enabled =
-                    NUP_Diamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = GB_MonEdit.Enabled = loaded = false;
+                    NUP_Diamonds.Enabled = NUP_BDiamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = GB_MonEdit.Enabled = loaded = false;
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() != DialogResult.OK) return;
 
@@ -282,19 +283,20 @@ namespace Pokemon_Rumble_World_Save_Tool
                 {
                     NUP_P.Value = BitConverter.ToUInt32(decdata, offset);
                     NUP_Diamonds.Value = BitConverter.ToUInt32(decdata, offset + 4);
+                    NUP_BDiamonds.Value = BitConverter.ToUInt32(decdata, offset + 76);
                     NUP_Rank.Value = BitConverter.ToUInt32(decdata, offset + 8);
                     textBox1.Text = ROOT_DIR;
                     loaded = true;
                     Update_Data(null, null);
                     B_Save_CMP.Enabled =
                         B_Save_DEC.Enabled =
-                            NUP_Diamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = GB_MonEdit.Enabled = true;
+                            NUP_Diamonds.Enabled = NUP_BDiamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = GB_MonEdit.Enabled = true;
                 }
                 else
                 {
                     MessageBox.Show("Unable to find offset of data. Try manually editing the save.");
                     B_Save_CMP.Enabled = B_Save_DEC.Enabled = GB_MonEdit.Enabled = true;
-                    NUP_Diamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = false;
+                    NUP_Diamonds.Enabled = NUP_BDiamonds.Enabled = NUP_P.Enabled = NUP_Rank.Enabled = false;
                 }
             }
             else
@@ -403,6 +405,7 @@ namespace Pokemon_Rumble_World_Save_Tool
 
             Array.Copy(BitConverter.GetBytes((uint)NUP_P.Value), 0, decdata, offset, 4);
             Array.Copy(BitConverter.GetBytes((uint)NUP_Diamonds.Value), 0, decdata, offset + 4, 4);
+            Array.Copy(BitConverter.GetBytes((uint)NUP_BDiamonds.Value), 0, decdata, offset + 76, 4);
             Array.Copy(BitConverter.GetBytes((uint)NUP_Rank.Value), 0, decdata, offset + 8, 4);
             fdata = Compress(decdata);
             decdata = Decompress(fdata);
